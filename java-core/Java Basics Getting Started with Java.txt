@@ -1,0 +1,9 @@
+本文翻译自http://javabeginnerstutorial.com/core-java-tutorial/java-basicsgetting-started-with-java/，如果喜欢请访问原文。
+我们将要从下几个java相关主题展开讨论：
+    1.如何下载java.  
+    2.如何安装java.
+    3.设置环境变量.
+    4.我们的第一个java程序.
+    5.如何编译一个java应用程序.
+    6.如何运行一个java应用程序.
+    7.java里JDK和JRE,J2SE和J2EE等重要术语之间的一些差异.
