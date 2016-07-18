@@ -1,0 +1,136 @@
+
+
+java中自己实现了很多加密类（md5等等）：http://java.chinaitlab.com/JavaSecurity/788406.html
+
+第一，谈谈final, finally, finalize的区别。
+final 修饰符（关键字）如果一个类被声明为final，意味着它不能再派生出新的子类，不能作为父类被继承。因此一个类不能既被声明为 abstract的，又被声明为final的。将变量或方法声明为final，可以保证它们在使用中不被改变。被声明为final的变量必须在声明时给定初值，因为不会自动赋初值，如final int i， i没有初值。而在以后的引用中只能读取，不可修改。被声明为final的方法也同样只能使用，不能重载.  如果final的是object，修改成员变量可以，但不能修改reference。
+
+finally 再异常处理时提供 finally 块来执行任何清除操作。如果抛出一个异常，那么相匹配的 catch 子句就会执行，然后控制就会进入 finally 块（如果有的话）。
+finalize?方法名。Java 技术允许使用 finalize() 方法在垃圾收集器将对象从内存中清除出去之前做必要的清理工作。这个方法是由垃圾收集器在确定这个对象没有被引用时对这个对象调用的。它是在 Object 类中定义的，因此所有的类都继承了它。子类覆盖 finalize() 方法以整理系统资源或者执行其他清理工作。finalize() 方法是在垃圾收集器删除对象之前对这个对象调用的。
+
+第二，Anonymous Inner Class (匿名内部类) 是否可以extends(继承)其它类，是否可以implements(实现)interface(接口)?
+匿名的内部类是没有名字的内部类。不能extends(继承) 其它类，但一个内部类可以作为一个接口，由另一个内部类实现。
+
+第三，Static Nested Class 和 Inner Class的不同，说得越多越好(面试题有的很笼统)。
+Nested Class （一般是C++的说法），Inner Class (一般是JAVA的说法)。Java内部类与C++嵌套类最大的不同就在于是否有指向外部的引用上。具体可见http: //www.frontfree.net/articles/services/view.asp?id=704&page=1
+注： 静态内部类（Inner Class）意味着1创建一个static内部类的对象，不需要一个外部类对象，2不能从一个static内部类的一个对象访问一个外部类对象
+
+第四，&和&&的区别。
+&是位运算符。&&是布尔逻辑运算符。
+
+第五，HashMap和Hashtable的区别。
+都属于Map接口的类，实现了将惟一键映射到特定的值上。
+HashMap 类没有分类或者排序。它允许一个 null 键和多个 null 值。
+Hashtable 类似于 HashMap，但是不允许 null 键和 null 值。它也比 HashMap 慢，因为它是同步的。
+
+第六，Collection 和 Collections的区别。
+Collections是个java.util下的类，它包含有各种有关集合操作的静态方法。
+Collection是个java.util下的接口，它是各种集合结构的父接口。
+
+第七，什么时候用assert。
+断言是一个包含布尔表达式的语句，在执行这个语句时假定该表达式为 true。如果表达式计算为 false，那么系统会报告一个 AssertionError。它用于调试目的：
+assert(a > 0); // throws an AssertionError if a <= 0
+断言可以有两种形式：
+assert Expression1 ;
+assert Expression1 : Expression2 ;
+Expression1 应该总是产生一个布尔值。
+Expression2 可以是得出一个值的任意表达式。这个值用于生成显示更多调试信息的 String 消息。
+断言在默认情况下是禁用的。要在编译时启用断言，需要使用 source 1.4 标记：
+javac -source 1.4 Test.java
+要在运行时启用断言，可使用 -enableassertions 或者 -ea 标记。
+要在运行时选择禁用断言，可使用 -da 或者 -disableassertions 标记。
+要系统类中启用断言，可使用 -esa 或者 -dsa 标记。还可以在包的基础上启用或者禁用断言。
+可以在预计正常情况下不会到达的任何位置上放置断言。断言可以用于验证传递给私有方法的参数。不过，断言不应该用于验证传递给公有方法的参数，因为不管是否启用了断言，公有方法都必须检查其参数。不过，既可以在公有方法中，也可以在非公有方法中利用断言测试后置条件。另外，断言不应该以任何方式改变程序的状态。
+
+第八，GC是什么? 为什么要有GC? (基础)。
+GC是垃圾收集器。Java 程序员不用担心内存管理，因为垃圾收集器会自动进行管理。要请求垃圾收集，可以调用下面的方法之一：
+System.gc()
+Runtime.getRuntime().gc()
+
+第九，String s = new String(“xyz”);创建了几个String Object?
+两个对象，一个是“xyx”,一个是指向“xyx”的引用对象s。
+
+第十，Math.round(11.5)等於多少? Math.round(-11.5)等於多少?
+Math.round(11.5)返回（long）12，Math.round(-11.5)返回（long）-11;
+第二十一，abstract的method是否可同时是static,是否可同时是native，是否可同时是synchronized?
+都不能
+
+第二十二，接口是否可继承接口? 抽象类是否可实现(implements)接口? 抽象类是否可继承实体类(concrete class)?
+接口可以继承接口。抽象类可以实现(implements)接口，抽象类是否可继承实体类，但前提是实体类必须有明确的构造函数。
+
+第二十三，启动一个线程是用run()还是start()?
+启动一个线程是调用start()方法，使线程所代表的虚拟处理机处于可运行状态，这意味着它可以由JVM调度并执行。这并不意味着线程就会立即运行。run()方法可以产生必须退出的标志来停止一个线程。
+
+第二十四，构造器Constructor是否可被override?
+构造器Constructor不能被继承，因此不能重写Overriding，但可以被重载Overloading。
+
+第二十五，是否可以继承String类?
+String类是final类故不可以继承。
+
+第二十六，当一个线程进入一个对象的一个synchronized方法后，其它线程是否可进入此对象的其它方法?
+不能，一个对象的一个synchronized方法只能由一个线程访问。
+
+第二十七，try {}里有一个return语句，那么紧跟在这个try后的finally {}里的code会不会被执行，什么时候被执行，在return前还是后?
+会执行，在return前执行。
+
+第二十八，编程题: 用最有效率的方法算出2乘以8等於几?
+有C背景的程序员特别喜欢问这种问题。
+
+2 << 3
+
+第二十九，两个对象值相同(x.equals(y) == true)，但却可有不同的hash code，这句话对不对?
+不对，有相同的hash code。
+
+第三十，当一个对象被当作参数传递到一个方法后，此方法可改变这个对象的属性，并可返回变化后的结果，那么这里到底是值传递还是引用传递?
+是值传递。Java 编程语言只由值传递参数。当一个对象实例作为一个参数被传递到方法中时，参数的值就是对该对象的引用。对象的内容可以在被调用的方法中改变，但对象的引用是永远不会改变的。
+
+第三十一，swtich是否能作用在byte上，是否能作用在long上，是否能作用在String上?
+switch（expr1）中，expr1是一个整数表达式。因此传递给 switch 和 case 语句的参数应该是 int、short、 char 或者 byte。long,string 都不能作用于swtich。
+
+第三十二，编程题: 写一个Singleton出来。
+Singleton模式主要作用是保证在Java应用程序中，一个类Class只有一个实例存在。
+一般Singleton模式通常有几种种形式:
+第一种形式: 定义一个类，它的构造函数为private的，它有一个static的private的该类变量，在类初始化时实例话，通过一个public的getInstance方法获取对它的引用,继而调用其中的方法。
+public class Singleton {
+private Singleton(){}
+//在自己内部定义自己一个实例，是不是很奇怪？
+//注意这是private 只供内部调用
+private static Singleton instance = new Singleton();
+//这里提供了一个供外部访问本class的静态方法，可以直接访问
+public static Singleton getInstance() {
+return instance;
+}
+}
+第二种形式:
+public class Singleton {
+private static Singleton instance = null;
+public static synchronized Singleton getInstance() {
+//这个方法比上面有所改进，不用每次都进行生成对象，只是第一次
+//使用时生成实例，提高了效率！
+if (instance==null)
+instance＝new Singleton();
+return instance; 　　}
+}
+
+2011/5/22
+
+8、运行时异常与一般异常有何异同？
+java编译器要求方法必须声明抛出可能发生的非运行时异常，但是并不要求必须声明抛出未被捕获的运行时异常。
+
+9、说出Servlet的生命周期，并说出Servlet和CGI的区别。
+Servlet被服务器实例化后，容器运行其init方法，请求到达时运行其service方法，service方法自动派遣运行与请求对应的doXXX方法（doGet，doPost）等，当服务器决定将实例销毁的时候调用其destroy方法。
+与cgi的区别在于servlet处于服务器进程中，它通过多线程方式运行其service方法，一个实例可以服务于多个请求，并且其实例一般不会销毁，而CGI对每个请求都产生新的进程，服务完成后就销毁，所以效率上低于servlet。
+
+10. java 是 pass by value,而非reference
+
+58、线程的基本概念、线程的基本状态以及状态之间的关系
+线程指在程序执行过程中，能够执行程序代码的一个执行单位，每个程序至少都有一个线程，也就是程序本身。
+Java中的线程有四种状态分别是：运行、就绪、挂起、结束
+
+57、JSP的常用内置对象: request, response, session, application,pageContext
+
+64、JSP和Servlet有哪些相同点和不同点，他们之间的联系是什么？
+JSP 是Servlet技术的扩展，本质上是Servlet的简易方式，更强调应用的外表表达。JSP编译后是”类servlet”。Servlet和JSP最主要的不同点在于，Servlet的应用逻辑是在Java文件中，并且完全从表示层中的HTML里分离开来。而JSP的情况是Java和HTML可以组合成一个扩展名为.jsp的文件。JSP侧重于视图，Servlet主要用于控制逻辑。
+
+70、XML文档定义有几种形式？它们之间有何本质区别？解析XML文档有哪几种方式？
+a: 两种形式 dtd schema，b: 本质区别:schema本身是xml的，可以被XML解析器解析(这也是从DTD上发展schema的根本目的)，c:有DOM,SAX
